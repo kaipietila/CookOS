@@ -1,6 +1,6 @@
 import { App } from "./App.tsx";
 import { fireEvent, render, screen, within  } from '@testing-library/react'
-import { toBeInTheDocument } from '@testing-library/jest-dom'
+import '@testing-library/jest-dom'
 import axios from 'axios';
 
 const mockOrder = {
