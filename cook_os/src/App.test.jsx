@@ -1,5 +1,6 @@
 import { App } from "./App.tsx";
 import { fireEvent, render, screen, within  } from '@testing-library/react'
+import { toBeInTheDocument } from '@testing-library/jest-dom'
 import axios from 'axios';
 
 const mockOrder = {
@@ -29,30 +30,26 @@ jest.mock('axios');
         axios.get.mockResolvedValue({data: [mockOrder]});
         render(<App />)
         const customerNameColumnValue = await screen.findByText(/Kai/i);
-        expect(customerNameColumnValue).toBeInTheDocument;
+        expect(customerNameColumnValue).toBeInTheDocument();
         const orderIdColumn = await screen.findByText(/123456/i);
-        expect(orderIdColumn).toBeInTheDocument;
+        expect(orderIdColumn).toBeInTheDocument();
         const itemDescriptionColumn = await screen.findByText(/Fancy burger/i);
-        expect(itemDescriptionColumn).toBeInTheDocument;
+        expect(itemDescriptionColumn).toBeInTheDocument();
         const pickUpTimeColumn = await screen.findByText(/today/i);
-        expect(pickUpTimeColumn).toBeInTheDocument;
+        expect(pickUpTimeColumn).toBeInTheDocument();
         const createdTimeColumn = await screen.findByText(/yesterday/i);
-        expect(createdTimeColumn).toBeInTheDocument;
+        expect(createdTimeColumn).toBeInTheDocument();
         const statusColumn = await screen.findByText(/received/i);
-        expect(statusColumn).toBeInTheDocument;
+        expect(statusColumn).toBeInTheDocument();
     })
     it('expands rows on click and see order details', async () => {
         axios.get.mockResolvedValue({data: [mockOrder]});
         render(<App />)
         const tableRowElement = await screen.findByTestId('order-row-123456')
-        expect(tableRowElement).toBeInTheDocument;
+        expect(tableRowElement).toBeInTheDocument();
         fireEvent.click(tableRowElement);
         const orderDetailsHeadingElement = screen.getByText('Order items')
-        expect(orderDetailsHeadingElement).toBeInTheDocument;
-
-        // click again to hide order details
-        fireEvent.click(tableRowElement);
-        expect(orderDetailsHeadingElement).not.toBeInTheDocument;
+        expect(orderDetailsHeadingElement).toBeInTheDocument();
     })
     it('has rows for each order', async () => {
         axios.get.mockResolvedValue({data: [mockOrder, mockOrder]});
@@ -65,7 +62,7 @@ jest.mock('axios');
         axios.get.mockResolvedValue({data: [mockOrder]});
         render(<App />)
         const orderStatusElement = await screen.findByRole('button')
-        expect(orderStatusElement).toBeInTheDocument;
+        expect(orderStatusElement).toBeInTheDocument();
         fireEvent.mouseDown(orderStatusElement);
         const listbox = within(screen.getByRole('listbox'));
         fireEvent.click(listbox.getByText(/In Progress/i));
@@ -78,7 +75,7 @@ jest.mock('axios');
         axios.get.mockResolvedValue({data: [mockOrder]});
         render(<App />)
         const tableRowElement = await screen.findByTestId('order-row-123456')
-        expect(tableRowElement).toBeInTheDocument;
+        expect(tableRowElement).toBeInTheDocument();
         fireEvent.click(tableRowElement);
 
         const statusButtonElements = screen.getAllByRole('button', {name:'Received'})
